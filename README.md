@@ -4,11 +4,15 @@ A libnss module and commands for managing additional users in `etcd`.
 Note: At this time go-libnss-etcd works. The `nss-etcd-passwd` needs rigorous testing before it should ever go into production, because it is expected to always run as root. If you need that command, I recommend not setting the sticky bit for it to run as root in production, so that unprivileged users can run it. 
 
 # Simple Installation (Quick and Lazy)
-Do the steps in `Locking Down ETCD` and then just run this as root:
+Do the steps in the section `Locking Down ETCD`
+Do the steps in the section `Configuration Files`
+Run this as root:
 ```
 # make && make install
 ```
-Thenk do the update to `/etc/nsswitch.conf` mentioned in the `Installing libnss_etcd.so.2` section.
+Do the showing the example of configuring `/etc/nsswitch.conf` mentioned in the `Installing libnss_etcd.so.2` section.
+
+After that you should be done. Just use the management tools documented in the last section of this README.
 
 # Building Manually
 There are 3 parts to compile this. There is the `libnss_etcd.so.2` shared library, the `nss-etcd-manage` CLI tool, and the `nss-etcd-passwd` CLI tool.
