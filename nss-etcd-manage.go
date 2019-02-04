@@ -81,7 +81,7 @@ func user_add(){
 	}
 
 	resp, err = etcd_insert(
-		path.Join("/etc/passwd/", strconv.Itoa(int(*f_uid))),
+		path.Join("/etc/passwd/", *f_username),
 		Passwd{
 			Username:	*f_username,
 			Password:	"x",
@@ -104,7 +104,7 @@ func user_add(){
 	}
 
 	resp, err = etcd_insert(
-		path.Join("/etc/group/", strconv.Itoa(int(*f_uid))),
+		path.Join("/etc/group/", *f_username),
 		Group{
 			Groupname:	*f_username,
 			Password:	"x",
@@ -125,7 +125,7 @@ func user_add(){
 
 	
 	resp, err = etcd_insert(
-		path.Join("/etc/shadow/", strconv.Itoa(int(*f_uid))),
+		path.Join("/etc/shadow/", *f_username),
 		Shadow{
 			Username:			*f_username,
 			Password:			hashedword,
@@ -164,20 +164,20 @@ func user_delete(){
 	}
 
 	var err error
-	_, err = etcd_delete(path.Join("/etc/passwd/", strconv.Itoa(int(user.UID))))
+	_, err = etcd_delete(path.Join("/etc/passwd/", user.Username))
 
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	_, err = etcd_delete(path.Join("/etc/group/", strconv.Itoa(int(user.GID))))
+	_, err = etcd_delete(path.Join("/etc/group/", user.Username))
 
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	_, err = etcd_delete(path.Join("/etc/shadow/", strconv.Itoa(int(user.UID))))
+	_, err = etcd_delete(path.Join("/etc/shadow/", user.Username))
 
 	if err != nil {
 		fmt.Println(err)
@@ -199,7 +199,7 @@ func group_add(){
 	}
 
 	resp, err := etcd_insert(
-		path.Join("/etc/group/", strconv.Itoa(int(*f_gid))),
+		path.Join("/etc/group/", *f_groupname),
 		Group{
 			Groupname:	*f_groupname,
 			Password:	"x",
@@ -232,7 +232,7 @@ func group_delete(){
 		os.Exit(1)
 	}
 
-	_, err := etcd_delete(path.Join("/etc/group/", strconv.Itoa(int(group.GID))))
+	_, err := etcd_delete(path.Join("/etc/group/", group.Groupname))
 
 	if err != nil {
 		fmt.Println(err)
@@ -262,7 +262,7 @@ func group_add_member(){
 	group.Members = append(group.Members, *f_username)
 	
 	resp, err := etcd_update(
-		path.Join("/etc/group/", strconv.Itoa(int(group.GID))),
+		path.Join("/etc/group/", group.Groupname),
 		group,
 	)
 
@@ -306,7 +306,7 @@ func group_remove_member(){
 	group.Members = new_members
 
 	resp, err := etcd_update(
-		path.Join("/etc/group/", strconv.Itoa(int(group.GID))),
+		path.Join("/etc/group/", group.Groupname),
 		group,
 	)
 
