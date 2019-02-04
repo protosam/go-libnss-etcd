@@ -3,6 +3,11 @@ A libnss module and commands for managing additional users in `etcd`.
 
 Note: At this time go-libnss-etcd works. The `nss-etcd-passwd` needs rigorous testing before it should ever go into production, because it is expected to always run as root. If you need that command, I recommend not setting the sticky bit for it to run as root in production, so that unprivileged users can run it. 
 
+To get this package run:
+```
+go get -d github.com/protosam/go-libnss-etcd
+```
+
 # Simple Installation (Quick and Lazy)
 Do the steps in the section `Locking Down ETCD`  
 Do the steps in the section `Configuration Files`  
