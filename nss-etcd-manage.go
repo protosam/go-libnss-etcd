@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"path"
-	"strconv"
 	"go.etcd.io/etcd/clientv3"
 )
 
