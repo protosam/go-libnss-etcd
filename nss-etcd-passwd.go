@@ -25,13 +25,11 @@ func main(){
 		os.Exit(1)
 	}
 
-	update_uid := os.Getuid()
-
 	var shadow_entry Shadow
 	found := false
 	if *f_username == "" {
 		for _, entry := range PasswdDB {
-			if entry.UID == uint(update_uid) {
+			if entry.UID == uint(os.Getuid()) {
 				*f_username = entry.Username
 			}
 		}
@@ -39,7 +37,6 @@ func main(){
 		for _, entry := range PasswdDB {
 			if entry.Username == *f_username {
 				*f_username = entry.Username
-				update_uid = int(entry.UID)
 			}
 		}
 	}
@@ -69,7 +66,7 @@ func main(){
 	shadow_entry.Password = hashedword
 
 	resp, err := etcd_update(
-		path.Join("/etc/shadow/", strconv.Itoa(update_uid)),
+		path.Join("/etc/shadow/", *f_username),
 		shadow_entry,
 	)
 
