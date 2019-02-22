@@ -156,8 +156,3 @@ As a libnss-etcd user, you can run the following to change your own password.
 ```
 # nss-etcd-passwd --password new_password
 ```
-
-
-## Credit & Support
-For support, open an issue in the issue tracker!
-Created by Sam Peterson <sam.igknighted@gmail.com>
