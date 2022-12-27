@@ -1,4 +1,6 @@
-Important: Any shared libraries made with CGO will inherit any design choices of the Go runtime as well as drawbacks involved with interoperability. This seems to hold true for Rust, Swift, and to my surprise C++. As such, it makes more sense to either make an ldap service to interface with libnss-ldapd/sssd, or write libnss modules in C. Fixing and using go-libnss comes with drawbacks that will likely set your project up for failure.
+⚠️ Avoid relying on Go for shared libraries. The [runtime](https://pkg.go.dev/runtime) uses signals it assumed to be unused for concurrency management. Assumptions like this are why the verion of Go can not be updated for `go-libnss` and make Go less predicable when building shared libraries.
+
+The current recommendation is to build services to be compatible with existing protocols like LDAP. You can use [go-ldap](https://github.com/go-ldap/ldap) to do that.
 
 # go-libnss-etcd
 A libnss module and commands for managing additional users in `etcd`.
